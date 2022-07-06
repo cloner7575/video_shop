@@ -1,0 +1,91 @@
+{% extends 'shared/index.html' %}
+
+{% block content %}
+<!-- Contact Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-secondary px-3 mb-5">راه های ارتباطی</h6>
+        </div>
+
+        <div class="row g-4 dr justify-content-center">
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <h5 class="mb-5">با ما در ارتباط باشید</h5>
+{#                <p class="mb-4">متن درباره ساپورت</p>#}
+{#                <div class="d-flex align-items-center mb-3">#}
+{#                    <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary"#}
+{#                         style="width: 50px; height: 50px;">#}
+{#                        <i class="fa fa-map-marker-alt text-white"></i>#}
+{#                    </div>#}
+{#                    <div class="ms-3">#}
+{#                        <h5 class="text-secondary mx-2">دفتر</h5>#}
+{#                        <p class="mb-0 mx-2">آدرس</p>#}
+{#                    </div>#}
+{#                </div>#}
+                <div class="d-flex align-items-center mb-3">
+                    <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary"
+                         style="width: 50px; height: 50px;">
+                        <i class="fa fa-phone-alt text-white"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5 class="text-secondary mx-2">شماره تماس</h5>
+                        <p class="mb-0 mx-2">0936 740 6527</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-primary"
+                         style="width: 50px; height: 50px;">
+                        <i class="fa fa-envelope-open text-white"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5 class="text-secondary mx-2">ایمیل</h5>
+                        <p class="mb-0 mx-2">shhnfz@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
+                <form class="contact-form row" action="{% url 'contact_us_page' %} " method="post">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+
+                                {{ form.full_name }}
+                                {{ form.full_name.errors }}
+                                <label for="name" style="right: 0;">نام شما</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form.phone }}
+                                {{ form.phone.errors }}
+                                <label style="right: 0;" for="email">شماره تماس شما</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                               {{ form.subject }}
+                                {{ form.subject.errors }}
+                                <label for="subject" style="right: 0;">موضوع پیام</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                {{ form.message }}
+                                {{ form.message.errors }}
+                                <label for="message" style="right: 0;">متن پیام</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary w-100 py-3" type="submit" style="right: 0;">ارسال پیام
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+{% endblock %}

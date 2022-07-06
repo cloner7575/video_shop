@@ -1,0 +1,111 @@
+{% extends 'shared/index.html' %}
+{% load static %}
+{% block title %}خانه{% endblock %}
+
+{% block content %}
+     <!-- Carousel Start -->
+    <div class="container-fluid p-0 mb-5">
+        <div class="owl-carousel header-carousel position-relative">
+{% if courses %}
+        {% for course in courses %}
+            {% if course.is_in_slider %}
+                <div class="owl-carousel-item position-relative">
+                    <img class="img-fluid" src="{{ course.main_picture.url }}" alt="">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
+                         style="background: rgba(24, 29, 56, .7);">
+                        <div class="container">
+                            <div class="row justify-content-end">
+                                <div class="col-sm-10 col-lg-8">
+
+                                    <h1 class="display-3 text-white animated slideInDown ">{{ course.title }}
+                                    </h1>
+                                    <p class="fs-5 text-white mb-4 pb-2">{{ course.short_description }}
+                                    </p>
+                                    {% if user.is_authenticated %}
+                                        <a href="{% url 'tutorial-login' slug=course.slug %}"
+                                           class="btn btn-light py-md-3 px-md-5 me-3 animated slideInLeft">اطلاعات
+                                            بیشتر</a>
+                                        <a href="{% url 'payment' slug=course.slug %}" class="btn btn-primary py-md-3 px-md-5 animated slideInRight">ثبت
+                                            نام</a>
+                                    {% else %}
+                                        <a href="{% url 'course-detail' slug=course.slug %}"
+                                           class="btn btn-light py-md-3 px-md-5 me-3 animated slideInLeft">اطلاعات
+                                            بیشتر</a>
+                                        <a href="{% url 'login_page' %}" class="btn btn-primary py-md-3 px-md-5 animated slideInRight">ثبت
+                                            نام</a>
+
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="{% static 'home_module/img/couse1.jpg' %}" alt="">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
+                 style="background: rgba(24, 29, 56, .7);">
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-sm-10 col-lg-8">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+         </div>
+    </div>
+    <!-- Carousel End -->
+     {% if not user.is_authenticated %}
+    <div class="row jusify-content-center px-5 mx-5">
+        <a href="{% url 'login_page' %}" class="btn btn-primary py-4 px-lg-5 d-lg-block">ورود / ثبت نام<i
+                class="fa fa-arrow-right ms-3"></i></a>
+    </div>
+    {% endif %}
+    <!-- About Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="img-fluid position-absolute w-100 h-100"
+                             src="{{ home_page.site_home_image.url }}" alt="" style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp dr" data-wow-delay="0.3s">
+                    <h6 class="section-title bg-white text-start text-secondary pe-3">{{ home_page.site_name }}</h6>
+                    <h1 class="mb-4">به {{ home_page.site_name }} خوش آمدید</h1>
+                    <p class="mb-4">{{ home_page.site_short_description }}</p>
+                    <p class="mb-4">{{ home_page.site_description }}</p>
+                    <div class="row gy-2 gx-4 mb-4">
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-arrow-left text-secondary me-2 p-2"></i>{{ home_page.site_headline_1 }} </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-arrow-left text-secondary me-2 p-2"></i>{{ home_page.site_headline_2 }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-arrow-left text-secondary me-2 p-2"></i>{{ home_page.site_headline_3 }} </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-arrow-left text-secondary me-2 p-2"></i> {{ home_page.site_headline_4 }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-arrow-left text-secondary me-2 p-2"></i> {{ home_page.site_headline_5 }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-arrow-left text-secondary me-2 p-2"></i> {{ home_page.site_headline_6 }}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+    {% include 'home_module/courses.html' %}
+
+{% endblock %}

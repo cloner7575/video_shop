@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>صفحه ورود</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+
+	<link rel="stylesheet" type="text/css" href="/static/account_module/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/static/account_module/css/main.css">
+	<!--===============================================================================================-->
+</head>
+
+<body>
+
+	<div class="limiter"  id="root">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form"  method="post" action="{% url 'register_page'  %}">
+					{% csrf_token %}
+                    <span class="login100-form-title p-b-26">
+						خوش میاید
+					</span>
+					<span class="login100-form-title p-b-48">
+						<i class="zmdi zmdi-font"></i>
+					</span>
+
+					<div class="wrap-input100 validate-input text-right fs-20" data-validate="شماره تلفن خود را وارد کنید">
+						<span class="focus-input100"
+							data-placeholder=" شماره همراه "></span>
+						{{ register_form.phone }}
+						{{ register_form.phone.errors }}
+					</div>
+
+					<div class="wrap-input100 validate-input text-right" data-validate="رمز عبور خود را وارد کنید">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+						<span class="focus-input100"
+							data-placeholder="  رمز عبور   "></span>
+                        {{ register_form.password }}
+                        {{ register_form.password.errors }}
+
+					</div>
+					<div class="wrap-input100 validate-input text-right" data-validate="رمز عبور خود را وارد کنید">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+
+						<span class="focus-input100"
+							data-placeholder="  تکرار رمز عبور   "></span>
+                        {{ register_form.confirm_password }}
+                        {{ register_form.confirm_password.errors }}
+					</div>
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" type="submit">
+								ثبت نام
+							</button>
+						</div>
+					</div>
+
+					<div class="text-center p-t-115">
+						<span class="txt1">
+							حساب کاربری دارید ؟‌
+						</span>
+
+						<a class="txt2" href="{% url 'login_page' %}" >
+							 ورود
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="dropDownSelect1"></div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+	<!--===============================================================================================-->
+	<script src="/static/account_module/js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+{% extends 'shared/index.html' %}
+
+{% block content %}
+    <!-- Head Course  Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="img-fluid position-absolute w-100 h-100" src="{{ gallery.image.url }}" alt=""
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp dr" data-wow-delay="0.3s">
+                    <div style="margin: 0 auto" class="text-center">
+                        <h6 class="section-title bg-white text-start text-secondary pe-3 dr">اطلاعات اثر </h6>
+                    </div>
+                    <h2 class="mb-4">{{ gallery.title }}
+                        {% if gallery.discount > 0 %}
+                            <span class="badge badge-primary" style="color: #c00;">
+                            <del>({{ gallery.price }} تومان)</del>
+
+                            <span class="badge badge-primary" style="color: #006400;" id="price">
+                                    <script>
+
+                                            document.getElementById("price").innerHTML = Math.abs({{ gallery.price }} - {{ gallery.discount }});
+                                    </script>
+                            تومان
+                                </span>
+                            {% else %}
+                            <span class="badge badge-primary" style="color: #006400;" id="price">
+                                    <script>
+                                        document.getElementById("price").innerHTML = {{ gallery.price }};
+                                    </script>
+                            تومان
+                                </span>
+
+                            {% endif %}
+
+                        </span></h2>
+                    <p class="mb-4">{{ gallery.description }}</p>
+
+                    <div class="row gy-2 gx-4 mb-4">
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-user-tie text-secondary me-2 p-2"></i><b> هنرمند :
+                            </b> {{ gallery.owner }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-paint-brush text-secondary me-2 p-2"></i><b> متریال :
+                            </b>{{ gallery.material }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-arrows-alt text-secondary me-2 p-2"></i><b>سایز :
+                            </b>{{ gallery.size }}</p>
+                        </div>
+
+
+                    </div>
+
+                  {% if  user.is_authenticated %}
+                      <a class="btn btn-primary py-3 px-5 mt-1" href="{% url 'gallery_payment' pk=gallery.pk %}"><i class="fa fa-shopping-cart  mx-2"></i>
+                        خرید اثر
+                    </a>
+                    {% else %}
+                        <a class="btn btn-primary py-3 px-5 mt-1" href="{% url 'login_page' %}"><i class="fa fa-shopping-cart  mx-2"></i>
+                            خرید اثر
+                        </a>
+                  {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Head Course End -->
+
+    <!-- About Course Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <!-- item -->
+                {% if gallery.second_image %}
+                    <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="img-fluid position-absolute w-100 h-100" src="{{ gallery.second_image.url }}" alt=""
+                             style="object-fit: cover;">
+                    </div>
+                    <!-- end item -->
+                </div>
+                {% endif %}
+            {% if gallery.third_image %}
+                <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.3s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="img-fluid position-absolute w-100 h-100" src="{{ gallery.third_image.url }}" alt=""
+                             style="object-fit: cover;">
+                    </div>
+                    <!-- end item -->
+                </div>
+            {% endif %}
+            {% if gallery.fourth_image %}
+                <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.5s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="img-fluid position-absolute w-100 h-100" src="{{ gallery.fourth_image.url }}" alt=""
+                             style="object-fit: cover;">
+                    </div>
+                    <!-- end item -->
+                </div>
+            {% endif %}
+
+            </div>
+        </div>
+    </div>
+    <!-- About Course End -->
+{% endblock %}
+
+

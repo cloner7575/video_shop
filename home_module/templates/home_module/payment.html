@@ -1,0 +1,70 @@
+{% extends 'shared/index.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Head Course  Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="img-fluid position-absolute w-100 h-100" src="{{ course.main_picture.url }}" alt=""
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp  text-center" data-wow-delay="0.3s">
+                    <div style="margin: 0 auto" class="text-center">
+                        <h6 class="section-title bg-white text-start text-secondary pe-3 dr">خرید و ثبت نام دوره </h6>
+                    </div>
+                    <h2 class="my-4">{{ course.title }}</h2>
+                    <div class="dr text-center paymentprice">
+                        <h2 class="mb-0 dr">
+                            <span>
+                        {% if course.discount %}
+                            <span class="" style="color: #c00;">
+                            <del class=""> {{ course.price }} تومان  </del>
+
+                            <span class="" style="color: #006400;">
+                            <span id="price">  </span>
+                            تومان
+                            <script>
+
+                                            document.getElementById("price").innerHTML = Math.abs({{ course.price }} - {{ course.discount }});
+
+                                        </script>
+
+                        {% else %}
+                            <span class="" style="color: #006400;">
+                            {{ course.price }}
+
+                        {% endif %}
+
+                        </span>
+                        </span>
+                        </h2>
+
+
+                    </div>
+
+
+
+                    <h5 class="my-5">لطفا پس از واریز وجه، تصویر رسید را به تلگرام یا واتساپ زیر ارسال کنید</h5>
+
+
+                    <a class="btn btn-primary py-3 px-5 mt-1" href="https://telegram.me/shahinfzai"><i
+                            class="fa fa-telegram  mx-2">@shahinfzai</i>
+                        : تلگرام
+                    </a>
+                    <img width="35px" src="{% static 'home_module/img/telegram.svg' %}">
+                    <img width="35px" src="{% static 'home_module/img/whatsapp.svg' %}">
+                    <a class="btn btn-primary py-3 px-5 mt-1" href="https://wa.me/+989367406527?text=salam"><i class="fa mx-2">09367406527</i>
+                        : واتساپ
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Head Course End -->
+
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'shared/index.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Head Course  Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="img-fluid position-absolute w-100 h-100" src="{{ gallery.image.url }}" alt=""
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp  text-center" data-wow-delay="0.3s">
+                    <div style="margin: 0 auto" class="text-center">
+                        <h6 class="section-title bg-white text-start text-secondary pe-3 dr">خرید اثر </h6>
+                    </div>
+                    <h2 class="my-4">{{ gallery.title }}</h2>
+                    <div class="dr text-center paymentprice">
+                       <h2 class="mb-4">{{ gallery.title }}
+                        {% if gallery.discount > 0 %}
+                            <span class="badge badge-primary" style="color: #c00;">
+                            <del>({{ gallery.price }} تومان)</del>
+
+                            <span class="badge badge-primary" style="color: #006400;" id="price">
+                                    <script>
+
+                                            document.getElementById("price").innerHTML = Math.abs({{ gallery.price }} - {{ gallery.discount }});
+                                    </script>
+                            تومان
+                                </span>
+                            {% else %}
+                            <span class="badge badge-primary" style="color: #006400;" id="price">
+                                    <script>
+                                        document.getElementById("price").innerHTML = {{ gallery.price }};
+                                    </script>
+                            تومان
+                                </span>
+
+                            {% endif %}
+
+                        </span></h2>
+
+
+                    </div>
+
+
+
+                    <h5 class="my-5">لطفا پس از واریز وجه، تصویر رسید را به تلگرام یا واتساپ زیر ارسال کنید</h5>
+
+
+                    <a class="btn btn-primary py-3 px-5 mt-1" href="https://telegram.me/shahinfzai"><i
+                            class="fa fa-telegram  mx-2">@shahinfzai</i>
+                        : تلگرام
+                    </a>
+                    <img width="35px" src="{% static 'home_module/img/telegram.svg' %}">
+                    <img width="35px" src="{% static 'home_module/img/whatsapp.svg' %}">
+                    <a class="btn btn-primary py-3 px-5 mt-1" href="https://wa.me/+989367406527?text=salam"><i class="fa mx-2">09367406527</i>
+                        : واتساپ
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Head Course End -->
+
+
+{% endblock %}

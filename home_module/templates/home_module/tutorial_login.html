@@ -1,0 +1,350 @@
+{% extends 'shared/index.html' %}
+{% load static %}
+
+{% block content %}
+   <!-- Head Course  Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="img-fluid position-absolute w-100 h-100" src="{{ course.main_picture.url }}" alt=""
+                             style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp dr" data-wow-delay="0.3s">
+                   <div style="margin: 0 auto" class="text-center">
+                            <h6 class="section-title bg-white text-start text-secondary pe-3 dr">اطلاعات دوره </h6>
+                        </div>
+                    {% if course.discount > 0 %}
+                        <h2 class="mb-4">{{ course.title }} <span class="badge badge-primary" style="color: #c00;">
+                                <del>({{ course.price }}  تومان) </del>
+
+                                <span class="badge badge-primary" style="color: #006400;">
+                                    ({{ total_price }} تومان)
+                                </span>
+                            </span></h2>
+                    {% else %}
+                        <h2 class="mb-4">{{ course.title }} <span class="badge badge-primary" style="color: #006400;">
+                                ({{ total_price }} تومان)
+                            </span></h2>
+
+                    {% endif %}
+                    <p class="mb-4">{{ course.short_description }}</p>
+
+                    <div class="row gy-2 gx-4 mb-4">
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-user-tie text-secondary me-2 p-2"></i><b>مدرس دوره :
+                            </b> {{ course.instructor }}</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-clock text-secondary me-2 p-2"></i><b>مدت زمان دوره :
+                            </b>{{ course.duration }}  </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-0"><i class="fa fa-info-circle text-secondary me-2 p-2"></i>
+                                {% if  course.is_finished %}
+                                    <b>وضعیت دوره :</b> دوره تمام شده
+                                {% else %}
+                                    <b>وضعیت دوره :</b> دوره در حال برگزاری است
+                                {% endif %}
+
+                        </div>
+
+
+                    </div>
+                    <h5>پیش نیاز های دوره</h5>
+                    <div class="row gy-2 gx-4 mb-4">
+                        {% for prerequistie in course.prerequisites.all %}
+                            <div class="col-sm-6">
+                                <p class="mb-0"><i class="fa fa-plus text-secondary me-2 p-2"></i>{{ prerequistie }}</p>
+                            </div>
+
+                        {% endfor %}
+
+
+                    </div>
+                    {% if not user.is_authenticated %}
+
+                    {% else %}
+                        {% if not user_course %}
+                            <a class="btn btn-primary py-3 px-5 mt-1" href="{% url 'payment' slug=course.slug %}"><i class="fa fa-shopping-cart  mx-2"></i>
+                                ثبت نام دوره
+                            </a>
+                        {% else %}
+                            {% if not user_course.first.is_active %}
+                                <h3 style="color: red"> دوره برای شما فعال نشده است</h3>
+                            {% endif %}
+                        {% endif %}
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Head Course End -->
+
+    <!-- About Course Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+
+                <div class="col-lg-6 wow fadeInUp dr" data-wow-delay="0.3s">
+                   <div style="margin: 0 auto" class="text-center">
+                            <h6 class="section-title bg-white text-start text-secondary pe-3 dr">جزئیات  دوره</h6>
+                        </div>
+
+                    <p class="mb-4">{{ course.description }}</p>
+
+                    <div class="row gy-2 gx-4 mb-4">
+
+
+                    </div>
+                    <h5> سرفصل های دوره</h5>
+                    <div class="row gy-2 gx-4 mb-4">
+                        {% if course_heading %}
+                            {% for heading in course_heading %}
+                                <div class="col-sm-6">
+                                    <p class="mb-0"><i
+                                            class="fa fa-check text-secondary me-2 p-2"></i>{{ heading.title }}</p>
+                                </div>
+
+                            {% endfor %}
+                        {% else %}
+                            <p class="mb-0">سرفصلی برای دوره ایجاد نشده است</p>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                    {% if course.second_picture %}
+                        <div class="position-relative h-100">
+                            <img class="img-fluid position-absolute w-100 h-100" src=" {{ course.second_picture.url }}"
+                                 alt=""
+                                 style="object-fit: cover;">
+                        </div>
+                        </div>
+                    {% endif %}
+
+            </div>
+        </div>
+    </div>
+    <!-- About Course End -->
+
+
+    <!-- Demo Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-4 text-center mb-4">
+                    <h6 class="section-title bg-white text-center text-secondary px-3">پیش نمایش دوره</h6>
+                </div>
+
+            </div>
+
+            <div class="row g-5">
+                <div class="col-12 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        {% if course.video_file %}
+                            <video class="img-fluid position-absolute w-100 h-100" controlsList="nodownload"
+                                      controls style="object-fit: cover;">
+
+                                <source src="{{ course.video_file }}" type="video/mp4">
+                            </video>
+
+
+
+
+                        {% else %}
+                            <h4 align="center">پیش نمایشی برای این دوره وجود ندارد</h4>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Demo End -->
+    <!-- Navigation Course Start -->
+ {% if  user.is_authenticated and user_course.first.is_active and course_session%}
+    <!-- Demo Start -->
+    <div class="container-xxl py-4" >
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-4 text-center mb-4">
+                    <h6 class="section-title bg-white text-center text-secondary px-3"> نمایش دوره </h6>
+                </div>
+
+            </div>
+
+            <div class="row g-5">
+                <div class="col-12 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+
+                        <video controls poster="{{ course.main_picture.url }}" id="video" class="img-fluid  w-100" controlsList="nodownload" style="object-fit: cover;" >
+                            <source src="{{ course.video_file }}" type="video/mp4" id="source">
+                            Your browser does not support the video tag.
+                        </video>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Demo End -->
+
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div id="accordion">
+            {% for heading in course_heading %}
+                <div class="chapter-list">
+                        <div class="dr" id="headingOne">
+
+                            <h5 class="mb-0">
+                                <button class="btn btn-secondary p-3 w-100 h-100 collapsed" data-toggle="collapse"
+                                    data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    {{ heading.title }}
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                             data-parent="#accordion">
+                            <div class="play-items-list">
+                            {% for item in course_session %}
+
+                                {% if item.course_heading_id == heading.id %}
+
+
+
+                                    <button class=" btn btn-primary w-100 dr p-3">
+                                    <span class="card-text"><span class="">۱.</span>
+                                        {{ item.title }}
+                                    </span>
+                                        <div style="display: inline; float:left">
+                                            <a class="btn btn-secondary" onclick="onchengeviedeo{{ item.id }}()">
+                                                <script>
+                                                    function onchengeviedeo{{ item.id }}() {
+                                                        var video = document.getElementById('video');
+                                                        var source = document.getElementById('source');
+                                                        source.setAttribute('src', '{{ item.video_link_720p }}');
+                                                        video.load();
+                                                        video.play();
+                                                    }
+
+                                                </script>
+                                                <i class="fa fa-play  mx-2"></i>
+                                                پخش با کیفیت ۷۲۰
+                                            </a>
+                                            <a class="btn btn-secondary" onclick="onchengeviedeo{{ item.id }}()">
+                                                <script>
+                                                    function onchengeviedeo{{ item.id }}() {
+                                                        var video = document.getElementById('video');
+                                                        var source = document.getElementById('source');
+                                                        source.setAttribute('src', '{{ item.video_link_360p }}');
+                                                        video.load();
+                                                        video.play();
+                                                    }
+
+                                                </script><i class="fa fa-play  mx-2"></i>
+                                                پخش با کیفیت ۳۶۰
+                                            </a>
+                                        </div>
+                                    </button>
+                                {% endif %}
+                            {% endfor %}
+
+                            </div>
+                        </div>
+                        </div>
+
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+     <script>
+            $('.collapse').collapse()
+        </script>
+{% endif %}
+   <!-- Comment Course Start -->
+          <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-4 text-center mb-4">
+                        <h6 class="section-title bg-white text-center text-secondary px-3">پرسش و پاسخ</h6>
+                    </div>
+                </div>
+                <div class="row g-5">
+
+
+                    <style>
+
+                    </style>
+                    <section>
+                        <div class="container">
+                            <div class="row">
+
+                                <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4 dr">
+                                    <form id="algin-form" action="{% url 'tutorial-login' slug=course.slug %}" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <h4 class="dr">آیا پرسشی دارید؟</h4>
+                                            <label for="message">پیام شما</label>
+                                             {{ question_form.question }}
+                                            {{ question_form.errors.question }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name">نام شما</label>
+                                            {{ question_form.name }}
+                                            {{ question_form.errors.name }}
+                                        </div>
+
+
+
+
+                                            <button class="btn btn-primary dr p-3 mt-1" type="submit" id="post" class="btn" >ثبت پرسش</button>
+
+                                    </form>
+                                </div>
+                            {% if question_and_answer %}
+                                <div class="col-sm-5 col-md-6 col-12 pb-4 dr mt-5">
+                                    {% for qustion in question_and_answer %}
+                                        {% if qustion.is_approved %}
+                                    <div class="comment-group">
+
+                                    <div class="comment mt-4 text-justify float-left">
+
+                                        <h4>{{ qustion.name }}</h4>
+
+
+                                        <p>
+                                            {{ qustion.question }}
+                                            </p>
+                                    </div>
+                                    <div class="comment text-justify darker mt-4 float-right bg-primary p-4">
+
+                                        <span>&#x293A;</span>
+                                        <br>
+                                        <p style="color: #fff">{{ qustion.answer }}</p>
+                                    </div>
+                                </div>
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                </div>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <!-- Comment Course End -->
+{% endblock %}
